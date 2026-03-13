@@ -51,7 +51,7 @@ function getAdminFromCookie(req: NextRequest): { userId: string; role: string } 
 // ── PATCH handler ──────────────────────────────────────────────────────────
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     // ── 1. Auth check ──────────────────────────────────────────────────────
     const admin = getAdminFromCookie(req);
@@ -93,7 +93,8 @@ export async function PATCH(
     // ── 3. Fetch + update the order ────────────────────────────────────────
     await connectDB();
 
-    const order = await Order.findById(params.id);
+    const { id } = await params;
+const order = await Order.findById(id);
     if (!order) {
         return NextResponse.json(
             { success: false, message: "Order not found" },
