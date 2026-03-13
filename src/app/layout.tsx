@@ -19,6 +19,44 @@ export const viewport: Viewport = {
     viewportFit:  "cover",
 };
 
+// ─── JSON-LD (defined outside component — no re-creation on each render) ───
+const jsonLd = {
+    "@context":       "https://schema.org",
+    "@type":          "FoodEstablishment",
+    name:             "FoodKnock",
+    url:              BASE_URL,
+    logo:             `${BASE_URL}/icon-512.png`,
+    image:            `${BASE_URL}/og-image.png`,
+    description:      "Fresh burgers, pizza, momos, shakes, juices & ice cream. Fast online food delivery in Danta, Sikar, Rajasthan.",
+    email:            "foodknock@gmail.com",
+    servesCuisine:    ["Fast Food", "Burgers", "Pizza", "Indian", "Desserts"],
+    priceRange:       "₹",
+    currenciesAccepted: "INR",
+    paymentAccepted:  "Credit Card, Debit Card, UPI, Net Banking",
+    address: {
+        "@type":         "PostalAddress",
+        streetAddress:   "Ramgarh Bas Stand Circle",
+        addressLocality: "Danta",
+        addressRegion:   "Rajasthan",
+        postalCode:      "332403",
+        addressCountry:  "IN",
+    },
+    geo: {
+        "@type":    "GeoCoordinates",
+        latitude:   "27.5",
+        longitude:  "75.4",
+    },
+    openingHoursSpecification: [
+        {
+            "@type":   "OpeningHoursSpecification",
+            dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            opens:     "09:00",
+            closes:    "22:00",
+        },
+    ],
+    hasMap: "https://maps.google.com/?q=Ramgarh+Bas+Stand+Circle+Danta+Sikar+Rajasthan",
+};
+
 // ─── Metadata ──────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
     metadataBase: new URL(BASE_URL),
@@ -86,11 +124,10 @@ export const metadata: Metadata = {
     ],
 
     category: "food",
-    classification: "Food & Drink",
 
     robots: {
-        index:          true,
-        follow:         true,
+        index:     true,
+        follow:    true,
         googleBot: {
             index:               true,
             follow:              true,
@@ -114,53 +151,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <head>
-                {/* JSON-LD — Local Business structured data */}
+            <body className="bg-[#FFFBF5] text-stone-800 antialiased">
+                {/* JSON-LD structured data — Next.js moves this into <head> automatically */}
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
-                            "@context":       "https://schema.org",
-                            "@type":          "FoodEstablishment",
-                            name:             "FoodKnock",
-                            url:              BASE_URL,
-                            logo:             `${BASE_URL}/icon-512.png`,
-                            image:            `${BASE_URL}/og-image.png`,
-                            description:      "Fresh burgers, pizza, momos, shakes, juices & ice cream. Fast online food delivery in Danta, Sikar, Rajasthan.",
-                            telephone:        "",
-                            email:            "foodknock@gmail.com",
-                            servesCuisine:    ["Fast Food", "Burgers", "Pizza", "Indian", "Desserts"],
-                            priceRange:       "₹",
-                            currenciesAccepted: "INR",
-                            paymentAccepted:  "Credit Card, Debit Card, UPI, Net Banking",
-                            address: {
-                                "@type":           "PostalAddress",
-                                streetAddress:     "Ramgarh Bas Stand Circle",
-                                addressLocality:   "Danta",
-                                addressRegion:     "Rajasthan",
-                                postalCode:        "332403",
-                                addressCountry:    "IN",
-                            },
-                            geo: {
-                                "@type":     "GeoCoordinates",
-                                latitude:    "27.5",
-                                longitude:   "75.4",
-                            },
-                            openingHoursSpecification: [
-                                {
-                                    "@type":    "OpeningHoursSpecification",
-                                    dayOfWeek:  ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-                                    opens:      "09:00",
-                                    closes:     "22:00",
-                                },
-                            ],
-                            sameAs: [],
-                            hasMap: "https://maps.google.com/?q=Ramgarh+Bas+Stand+Circle+Danta+Sikar+Rajasthan",
-                        }),
-                    }}
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
-            </head>
-            <body className="bg-[#FFFBF5] text-stone-800 antialiased">
+
                 {children}
 
                 <Suspense fallback={null}>
