@@ -1,34 +1,37 @@
 {
-  "name": "FoodKnock — Fresh Food Delivery",
+  "name": "FoodKnock - Fresh Food Delivery",
   "short_name": "FoodKnock",
-  "description": "Order fresh burgers, pizza, momos, shakes & more. Fast delivery in Danta, Sikar, Rajasthan.",
+  "description": "Fresh burgers, pizza, momos, shakes, juices & ice cream. Order online. Hot & fast delivery.",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#FFFBF5",
   "theme_color": "#f59e0b",
-  "orientation": "portrait-primary",
-  "lang": "en-IN",
-  "categories": ["food", "shopping"],
+  "categories": ["food", "shopping", "lifestyle"],
   "icons": [
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
+      "purpose": "any"
+    },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "form_factor": "narrow"
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
