@@ -1,6 +1,6 @@
 {
-  "name": "Sunrise Fast Food & Juice and Ice-Cream Corner",
-  "short_name": "Sunrise Food",
+  "name": "FoodKnock - Fresh Food Delivery",
+  "short_name": "FoodKnock",
   "description": "Fresh burgers, pizza, momos, shakes, juices & ice cream. Order online. Hot & fast delivery.",
   "start_url": "/",
   "display": "standalone",
@@ -40,7 +40,7 @@
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Sunrise Fast Food — Order Screen"
+      "label": "FoodKnock — Order Screen"
     }
   ]
 }
