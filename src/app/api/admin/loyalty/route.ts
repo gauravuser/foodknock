@@ -231,7 +231,7 @@ export async function POST(req: NextRequest) {
             userId,
             points: signedPoints,
             type,
-            note:   note ?? (isDebit ? "Admin debit" : "Admin credit"),
+            note:   note ?? (isDebit ? "System debit" : "System credit"),
         });
 
         const updated = await User.findById(userId).select("loyaltyPoints name").lean();
