@@ -77,7 +77,7 @@ function EmptyCart() {
                 {[
                     { icon: Flame, text: "Fresh Daily" },
                     { icon: Zap, text: "Fast Delivery" },
-                    { icon: ShieldCheck, text: "WhatsApp Checkout" },
+                    { icon: ShieldCheck, text: "System Checkout" },
                 ].map(({ icon: Icon, text }) => (
                     <div key={text} className="flex items-center gap-1.5 text-[11px] font-bold text-stone-400">
                         <Icon size={12} className="text-amber-500" strokeWidth={2.5} />
