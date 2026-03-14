@@ -19,6 +19,9 @@ async function notifyAdminTelegram(params: {
     orderId:                    string;
     customerName:               string;
     phone:                      string;
+    address:                    string;
+    landmark:                   string;
+    note:                       string;
     items:                      Array<{ name: string; quantity: number; price: number }>;
     totalAmount:                number;
     orderType:                  string;
@@ -38,20 +41,23 @@ async function notifyAdminTelegram(params: {
         .join("\n");
 
     const lines = [
-        `🔥 <b>New Order — FoodKnock</b>`,
-        ``,
-        `🧾 <b>Order ID:</b> <code>${params.orderId}</code>`,
-        `👤 <b>Customer:</b> ${params.customerName}`,
-        `📞 <b>Phone:</b> ${params.phone}`,
-        `🛵 <b>Type:</b> ${params.orderType === "pickup" ? "Self Pickup 🏪" : "Home Delivery 🛵"}`,
-        `💳 <b>Payment:</b> ${params.paymentMethod.toUpperCase()}`,
-        ...(params.isFirstDeliveryFreeApplied ? [`🎁 <b>First-order free delivery applied!</b>`] : []),
-        ``,
-        `🛒 <b>Items:</b>`,
-        itemLines,
-        ``,
-        `💰 <b>Total: ₹${params.totalAmount}</b>`,
-    ];
+            `🔥 <b>New Order — FoodKnock</b>`,
+            ``,
+            `🧾 <b>Order ID:</b> <code>${params.orderId}</code>`,
+            `👤 <b>Customer:</b> ${params.customerName}`,
+            `📞 <b>Phone:</b> ${params.phone}`,
+            `🛵 <b>Type:</b> ${params.orderType === "pickup" ? "Self Pickup 🏪" : "Home Delivery 🛵"}`,
+            `💳 <b>Payment:</b> ${params.paymentMethod.toUpperCase()}`,
+            `📍 <b>Address:</b> ${params.address || "-"}`,
+            ...(params.landmark ? [`🧭 <b>Landmark:</b> ${params.landmark}`] : []),
+            ...(params.note ? [`📝 <b>Note:</b> ${params.note}`] : []),
+            ...(params.isFirstDeliveryFreeApplied ? [`🎁 <b>First-order free delivery applied!</b>`] : []),
+            ``,
+            `🛒 <b>Items:</b>`,
+            itemLines,
+            ``,
+            `💰 <b>Total: ₹${params.totalAmount}</b>`,
+        ];
 
     try {
         const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -277,13 +283,16 @@ export async function POST(req: Request) {
 
         // ── Telegram notification (fire-and-forget) ───────────────────────
         notifyAdminTelegram({
-            orderId:                    newOrderId,
-            customerName:               customerName?.trim(),
-            phone:                      phone?.trim(),
+            orderId: newOrderId,
+            customerName: customerName?.trim(),
+            phone: phone?.trim(),
+            address: orderType === "delivery" ? address?.trim() : "Pickup",
+            landmark: landmark?.trim(),
+            note: note?.trim(),
             items,
             totalAmount,
             orderType,
-            paymentMethod:              paymentMethod ?? "cod",
+            paymentMethod: paymentMethod ?? "cod",
             isFirstDeliveryFreeApplied: firstDeliveryFree,
         }).catch((err) => console.error("TELEGRAM_NOTIFY_UNHANDLED", err));
 
